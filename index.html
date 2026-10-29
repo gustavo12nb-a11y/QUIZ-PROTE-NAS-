@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quiz das Proteínas e Funções Orgânicas</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eef4e6;--card:#fffdf8;--tx:#2b1d33;--mu:#6b5f73;--bd:#d9dfcc;--ac:#7a3b8f;--l0:#e0a410;--l1:#d2476f;--l2:#4c5fd0;--l3:#3d7d2b;
+--o0:#f2b632;--o0t:#2b1d33;--o1:#c2416b;--o2:#4c5fd0;--o3:#3d7d2b;--ok:#2f8f3a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14201a;--card:#1e2d25;--tx:#f3efe4;--mu:#a9b8ab;--bd:#35483d;--ac:#d9a7ee;--l0:#f2b632;--l1:#ef7b9d;--l2:#8b9bf0;--l3:#7cc462;--ok:#7cc462}}
+:root[data-theme="dark"]{--bg:#14201a;--card:#1e2d25;--tx:#f3efe4;--mu:#a9b8ab;--bd:#35483d;--ac:#d9a7ee;--l0:#f2b632;--l1:#ef7b9d;--l2:#8b9bf0;--l3:#7cc462;--ok:#7cc462}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:17px/1.55 "DM Sans","Segoe UI",system-ui,sans-serif;min-height:100vh}
+main{max-width:720px;margin:0 auto;padding:22px 16px 48px}
+h1,h2,.q{font-family:Fraunces,Georgia,"Times New Roman",serif}
+h1{font-size:clamp(2.3rem,8vw,3.8rem);line-height:1.02;margin:.15em 0 .25em;font-weight:800;letter-spacing:-.02em}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:24px;padding:22px;box-shadow:0 10px 30px -18px rgba(43,29,51,.35)}
+.mu{color:var(--mu)}
+button{font:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--ac);outline-offset:3px}
+.go{background:var(--ac);color:var(--bg);border:0;border-radius:999px;padding:14px 30px;font-weight:700;font-size:1.05rem}
+.mol{width:100%;height:auto;display:block;margin:0 0 6px}
+.rules{margin:0 0 18px;padding-left:1.1em}.rules li{margin:.3em 0}
+.stats{display:flex;justify-content:space-between;gap:8px;margin-bottom:12px}
+.stats div{flex:1;text-align:center;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:8px 4px}
+.stats b{display:block;font:800 1.35rem Fraunces,Georgia,serif}.stats span{font-size:.78rem;color:var(--mu)}
+.chain{position:relative;display:flex;justify-content:space-between;gap:3px;margin:4px 2px 16px}
+.chain:before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;background:var(--bd)}
+.b{position:relative;flex:1 1 0;max-width:16px;aspect-ratio:1;border-radius:50%;border:2px solid var(--lc);background:var(--card);transition:transform .2s}
+.b.ok{background:var(--lc)}.b.no{border-style:dashed;opacity:.55}.b.now{transform:scale(1.5)}
+.lv{display:inline-block;padding:4px 14px;border-radius:999px;font-weight:700;font-size:.85rem;color:#2b1d33;background:var(--lc)}
+.q{font-size:clamp(1.3rem,4.4vw,1.7rem);line-height:1.25;font-weight:600;margin:14px 0 18px}
+.opts{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+@media (max-width:560px){.opts{grid-template-columns:1fr}}
+.o{display:flex;gap:12px;align-items:center;text-align:left;color:#fff;border:0;border-radius:18px;padding:14px;min-height:76px;font-weight:500;font-size:.98rem;transition:transform .15s,opacity .2s}
+.o:not(:disabled):hover{transform:translateY(-2px)}
+.o i{flex:none;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.28);display:grid;place-items:center;font:800 1rem Fraunces,Georgia,serif;font-style:normal}
+.c0{background:var(--o0);color:var(--o0t)}.c0 i{background:rgba(43,29,51,.15)}.c1{background:var(--o1)}.c2{background:var(--o2)}.c3{background:var(--o3)}
+.o:disabled{cursor:default}.o.dim{opacity:.35}
+.o.ok{box-shadow:0 0 0 4px var(--card),0 0 0 8px var(--ok)}.o.bad{opacity:.6;text-decoration:line-through}
+#fb{margin-top:18px;border-left:8px solid var(--ok)}
+#fb.no{border-left-color:var(--l1)}
+#fb h2{margin:0 0 6px;font-size:1.5rem}
+.hid{display:none}
+#rv h2{font-size:1.4rem;margin:18px 0 4px}
+.mi{border-left:6px solid var(--l1);padding:2px 0 2px 12px;margin:16px 0}
+.mi p{margin:.3em 0}
+.tip{background:var(--bg);border-radius:14px;padding:12px 14px;margin:10px 0}
+table{width:100%;border-collapse:collapse;margin-bottom:14px}td,th{padding:9px 6px;border-bottom:1px solid var(--bd);text-align:left;font-weight:500}td{text-align:right;font-weight:700}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<section id="home">
+<svg class="mol" id="mol" viewBox="0 0 640 110" role="img" aria-label="Cadeia de aminoácidos ligados por ligações peptídicas"></svg>
+<h1>Quiz das Proteínas</h1>
+<p class="mu">25 perguntas sobre aminoácidos, ligação peptídica, função amida, níveis estruturais e desnaturação.</p>
+<div class="card">
+<ul class="rules">
+<li>Sem cronômetro: pense com calma.</li>
+<li>Cada acerto vale <b>1000 pontos</b>. Acertos seguidos rendem bônus de até +500.</li>
+<li>Cada resposta traz a explicação química. Você também pode usar as teclas A, B, C e D.</li>
+</ul>
+<button class="go" id="start">Começar</button>
+</div>
+</section>
+
+<section id="game" class="hid">
+<div class="stats">
+<div><b id="hA">0</b><span>Acertos</span></div>
+<div><b id="hE">0</b><span>Erros</span></div>
+<div><b id="hP">0</b><span>Pontos</span></div>
+<div><b id="hS">0</b><span>Streak</span></div>
+</div>
+<div class="chain" id="chain" aria-hidden="true"></div>
+<div class="card">
+<span class="lv" id="lv"></span> <span class="mu" id="num"></span>
+<p class="q" id="q"></p>
+<div class="opts" id="opts"></div>
+<div id="fb" class="card hid" aria-live="polite">
+<h2 id="fh"></h2><p id="ft"></p><p class="mu" id="fp"></p>
+<button class="go" id="next">Próxima pergunta</button>
+</div>
+</div>
+</section>
+
+<section id="end" class="hid">
+<h1 id="rt"></h1>
+<div class="card">
+<table id="rs"></table><div id="rv"></div>
+<button class="go" id="again">Jogar de novo</button>
+</div>
+</section>
+</main>
+<script>
+var L=["Nível 1: Conceitos básicos","Nível 2: Reações e transformações","Nível 3: Arquitetura e propriedades","Desafio final"];
+// [nível, pergunta, [correta, errada, errada, errada], explicação]
+var Q=[
+[0,"Quais são os quatro grupos ligados ao carbono alfa de um alfa-aminoácido?",["Amino (–NH₂), carboxila (–COOH), cadeia lateral (R) e hidrogênio","Amino, hidroxila, carbonila e cadeia lateral","Duas carboxilas, um amino e um hidrogênio","Amida, carboxila, cadeia lateral e oxigênio"],"O carbono alfa é tetraédrico e se liga a quatro grupos distintos: amino, carboxila, cadeia lateral (R) e um átomo de hidrogênio."],
+[0,"Qual grupo funcional do aminoácido tem caráter básico?",["Carboxila (–COOH)","Hidroxila isolada","Amina (–NH₂)","Amida (–CONH–)"],"A amina é básica porque o nitrogênio tem par eletrônico livre e recebe prótons (H⁺)."],
+[0,"Qual grupo do aminoácido doa prótons (H⁺) e tem elevada polaridade?",["Cadeia lateral R","Ácido carboxílico (–COOH)","Amina (–NH₂)","Hidrogênio ligado ao carbono alfa"],"O ácido carboxílico tem caráter ácido e reúne carbonila e hidroxila, o que lhe dá elevada polaridade."],
+[0,"Quantos aminoácidos padrão participam da formação das proteínas humanas?",["10","15","50","20"],"São 20 aminoácidos padrão. A sequência deles influencia a estrutura e a função da proteína."],
+[0,"O que a cadeia lateral (R) determina em um aminoácido?",["As propriedades físico-químicas específicas","Apenas o número de carbonos do grupo amino","A quantidade de água liberada","O caráter ácido da carboxila, sempre igual"],"O grupo R é o componente variável e determina as propriedades físico-químicas específicas de cada aminoácido."],
+[0,"Por que os aminoácidos são chamados de moléculas de função mista?",["Têm só grupos apolares","Têm dois grupos amida","Têm caráter ácido e básico ao mesmo tempo","Não possuem nitrogênio"],"Função mista: a mesma molécula contém simultaneamente caráter ácido (carboxila) e básico (amina)."],
+[1,"A ligação peptídica ocorre entre quais grupos?",["Duas aminas","A carboxila de um aminoácido e a amina de outro","Duas carboxilas","Duas cadeias laterais R"],"É uma reação de síntese (condensação) entre a carboxila de um aminoácido e a amina de outro."],
+[1,"Qual a natureza da reação que forma a ligação peptídica?",["Combustão","Neutralização total","Hidrólise","Condensação, com liberação de água"],"Na condensação, duas moléculas se unem e eliminam uma molécula pequena: a água."],
+[1,"Quanta água é eliminada na formação de cada ligação peptídica?",["Nenhuma","Duas moléculas","Meia molécula, em média","Uma molécula de H₂O por ligação formada"],"Cada ligação peptídica formada elimina uma molécula de H₂O (OH da carboxila + H da amina)."],
+[1,"Que função orgânica é gerada pela ligação peptídica?",["Amida, com o grupo –C(=O)–N–","Éster","Álcool","Aldeído"],"A ligação entre C=O e N–H gera a função orgânica amida ao longo de todo o esqueleto peptídico."],
+[1,"Qual associação está correta?",["Amina: tem carboxila","Ácido carboxílico: contém nitrogênio","Amida: encontrada na ligação peptídica","Amida: tem só oxigênio"],"Amina contém nitrogênio, ácido carboxílico apresenta carboxila e amida (–C(=O)–N–) está na ligação peptídica."],
+[1,"O que a ressonância eletrônica confere à ligação peptídica?",["Cor à proteína","Rigidez planar que estabiliza a estrutura","Maior liberação de água","Caráter fortemente ácido"],"A ressonância gera rigidez planar, que ajuda a estabilizar a estrutura da proteína."],
+[1,"As pontes de hidrogênio no esqueleto peptídico se formam entre:",["Dois carbonos","Duas hidroxilas de água","Dois nitrogênios","O oxigênio da carbonila e o hidrogênio da amida"],"A atração ocorre entre o oxigênio da carbonila (C=O) e o hidrogênio da amida (N–H)."],
+[2,"O que é a estrutura primária de uma proteína?",["O dobramento 3D","A sequência linear de aminoácidos unidos por ligações peptídicas","A união de várias cadeias","Apenas a hélice alfa"],"Nível 1: sequência linear de aminoácidos ligados por ligações peptídicas."],
+[2,"Segundo os slides, o que caracteriza a estrutura secundária?",["Associação de cadeias","Sequência de aminoácidos","Ligação C=O e N–H formando a função amida ao longo da cadeia","Perda da função biológica"],"Nível 2: a ligação entre C=O e N–H forma a função amida ao longo da cadeia peptídica (exemplos: α-hélice e folha β)."],
+[2,"A estrutura terciária corresponde a:",["Dobramento tridimensional da cadeia polipeptídica, que determina sua estrutura funcional","Duas cadeias associadas","Apenas a sequência de aminoácidos","Ruptura das ligações peptídicas"],"Nível 3: dobramento tridimensional da cadeia polipeptídica."],
+[2,"Qual nível estrutural envolve duas ou mais cadeias polipeptídicas?",["Primário","Secundário","Terciário","Quaternário"],"Nível 4: associação de duas ou mais cadeias polipeptídicas que formam uma proteína funcional."],
+[2,"O que ocorre na desnaturação de uma proteína?",["Quebra de todas as ligações peptídicas","Perda da estrutura 3D, sem romper ligações peptídicas","Formação de novos aminoácidos","Aumento do número de cadeias"],"Há ruptura de pontes de hidrogênio e interações da cadeia, mas as ligações peptídicas permanecem."],
+[2,"Qual a consequência da desnaturação para a proteína?",["Ganha novas funções","Fica mais ácida","Inativação biológica: perde sua função original","Passa a ser um aminoácido"],"Sem a estrutura tridimensional, a proteína perde completamente sua função biológica original."],
+[2,"Qual agente desnaturante rompe interações apolares?",["Calor elevado","Solventes orgânicos","Variação de pH","Ligações peptídicas"],"Solventes orgânicos rompem interações apolares. Calor aumenta a agitação térmica e o pH altera cargas elétricas."],
+[2,"Por que a clara do ovo muda ao fritar?",["As ligações peptídicas se formam","O ovo perde água","A proteína ganha aminoácidos","O calor aumenta a agitação térmica e desnatura a proteína"],"O calor elevado desnatura as proteínas do ovo: elas perdem a estrutura 3D original."],
+[3,"Qual a função das enzimas no organismo?",["Catalisar: acelerar reações bioquímicas vitais","Formar o esqueleto ósseo","Armazenar água","Doar prótons"],"Enzimas são proteínas catalisadoras que aceleram reações bioquímicas vitais."],
+[3,"Colágeno e queratina são exemplos de proteínas com função de:",["Defesa imunológica","Catálise","Suporte estrutural","Eliminação de água"],"Colágeno e queratina fazem a sustentação estrutural do organismo."],
+[3,"Anticorpos são proteínas que atuam em:",["Suporte estrutural","Defesa imunológica, neutralizando patógenos","Catálise de combustão","Formação de ligações peptídicas"],"Anticorpos participam da defesa imunológica, neutralizando patógenos."],
+[3,"Ao cozinhar um alimento, a proteína desnatura. Quais ligações permanecem intactas?",["Pontes de hidrogênio","Interações da cadeia","A estrutura terciária","As ligações peptídicas (função amida)"],"A desnaturação rompe a estrutura 3D, mas não as ligações peptídicas, então a cadeia de aminoácidos continua ligada."],
+[3,"Qual sequência descreve corretamente do aminoácido à proteína?",["Hidrólise, amina, cadeia solta","Amida isolada, depois aminoácido","Condensação entre carboxila e amina, perda de água, ligação peptídica (amida), dobramento em níveis estruturais","Desnaturação, depois ligação peptídica"],"Aminoácidos reagem por condensação (liberando H₂O), formam a ligação peptídica com função amida e a cadeia se organiza em 4 níveis estruturais."]
+];
+var $=function(i){return document.getElementById(i)};
+var st,cur,locked,order,res,miss;
+var G=["Revise o carbono alfa e os grupos funcionais: a amina (–NH₂) é básica porque o nitrogênio tem par eletrônico livre, e o ácido carboxílico (–COOH) doa H⁺ e é muito polar. Por terem os dois, os 20 aminoácidos são de função mista.","Revise a condensação: a carboxila de um aminoácido reage com a amina de outro, libera uma H₂O por ligação e forma a ligação peptídica, que é a função amida (–C(=O)–N–).","Revise os 4 níveis (sequência, amida/hélice e folha, dobramento 3D, união de cadeias) e a desnaturação: calor, pH e solventes orgânicos desfazem a estrutura 3D e a função, mas não rompem as ligações peptídicas.","Revise as aplicações: enzimas catalisam reações, colágeno e queratina dão suporte estrutural e anticorpos fazem a defesa imunológica. Lembre que a desnaturação preserva a sequência de aminoácidos."];
+var LET=["A","B","C","D"];
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function mol(){var cs=["--l0","--l1","--l2","--l3"],s="",p=[];
+ for(var i=0;i<11;i++)p.push([30+i*58,i%2?78:32]);
+ s+="<polyline fill=\"none\" stroke=\"var(--bd)\" stroke-width=\"5\" stroke-linejoin=\"round\" points=\""+p.map(function(x){return x.join(",")}).join(" ")+"\"/>";
+ p.forEach(function(x,i){s+="<circle cx=\""+x[0]+"\" cy=\""+x[1]+"\" r=\""+(i%2?14:19)+"\" fill=\"var("+cs[i%4]+")\"/>"});
+ $("mol").innerHTML=s}
+function show(id){["home","game","end"].forEach(function(s){$(s).classList.toggle("hid",s!==id)})}
+function hud(){$("hA").textContent=st.a;$("hE").textContent=st.e;$("hP").textContent=st.p;$("hS").textContent=st.s}
+function chain(){var c=$("chain").children;for(var i=0;i<c.length;i++)c[i].className="b"+(res[i]===1?" ok":res[i]===0?" no":"")+(i===cur?" now":"")}
+function start(){st={a:0,e:0,p:0,s:0,best:0,lv:[0,0,0,0],tot:[0,0,0,0]};Q.forEach(function(q){st.tot[q[0]]++});
+ res=Q.map(function(){return null});miss=[];cur=0;
+ $("chain").innerHTML=Q.map(function(q){return "<i class=\"b\" style=\"--lc:var(--l"+q[0]+")\"></i>"}).join("");
+ show("game");hud();ask()}
+function ask(){
+ var q=Q[cur];locked=false;
+ $("lv").style.setProperty("--lc","var(--l"+q[0]+")");$("lv").textContent=L[q[0]];
+ $("num").textContent="Pergunta "+(cur+1)+" de "+Q.length;
+ $("q").textContent=q[1];$("fb").classList.add("hid");chain();
+ order=shuf([0,1,2,3]);$("opts").innerHTML="";
+ order.forEach(function(oi,k){
+  var b=document.createElement("button");b.className="o c"+k;
+  b.innerHTML="<i>"+LET[k]+"</i><span></span>";
+  b.lastChild.textContent=q[2][oi];
+  b.onclick=function(){pick(k)};$("opts").appendChild(b)});
+}
+function pick(k){
+ if(locked)return;locked=true;
+ var q=Q[cur],ok=order[k]===0,bs=$("opts").children,h=$("fh");
+ for(var i=0;i<4;i++){bs[i].disabled=true;if(order[i]===0)bs[i].classList.add("ok");else if(i===k)bs[i].classList.add("bad");else bs[i].classList.add("dim")}
+ $("fb").classList.toggle("no",!ok);
+ if(ok){var g=1000+Math.min(st.s,5)*100;st.a++;st.s++;st.p+=g;st.lv[q[0]]++;if(st.s>st.best)st.best=st.s;res[cur]=1;
+  h.textContent="Acertou! +"+g+" pontos"+(st.s>=3?" (streak de "+st.s+")":"")}
+ else{st.e++;st.s=0;res[cur]=0;miss.push({i:cur,t:q[2][order[k]]});h.textContent="Quase! Dessa vez 0 pontos"}
+ $("ft").textContent=q[3];
+ $("fp").textContent="Placar: "+st.a+" acertos, "+st.e+" erros, "+st.p+" pontos.";
+ $("next").textContent=cur===Q.length-1?"Ver resultado final":"Próxima pergunta";
+ $("fb").classList.remove("hid");hud();chain();$("next").focus();
+}
+function fin(){
+ show("end");var pc=st.a/Q.length;
+ $("rt").textContent=pc>=.9?"Cadeia perfeita!":pc>=.7?"Ótimo desempenho!":pc>=.5?"Bom caminho, revise os slides":"Vale revisar e tentar de novo";
+ var r="<tr><th>Pontuação final</th><td>"+st.p+"</td></tr><tr><th>Acertos</th><td>"+st.a+" de "+Q.length+"</td></tr><tr><th>Erros</th><td>"+st.e+"</td></tr><tr><th>Maior streak</th><td>"+st.best+"</td></tr>";
+ L.forEach(function(n,i){r+="<tr><th>"+n+"</th><td>"+st.lv[i]+" de "+st.tot[i]+"</td></tr>"});
+ $("rs").innerHTML=r;
+ var v="<h2>Balanço dos erros</h2>";
+ if(!miss.length){v+="<p>Você não errou nenhuma pergunta. Todos os conceitos dos slides estão firmes!</p>"}
+ else{
+  var lvs=[];
+  miss.forEach(function(m){var q=Q[m.i];if(lvs.indexOf(q[0])<0)lvs.push(q[0]);
+   v+="<div class=\"mi\"><p class=\"mu\">"+L[q[0]]+"</p><p><b>"+q[1]+"</b></p><p>Você marcou: "+m.t+"</p><p>Resposta correta: <b>"+q[2][0]+"</b></p><p>"+q[3]+"</p></div>"});
+  v+="<h2>O que revisar</h2>";
+  lvs.sort().forEach(function(n){v+="<div class=\"tip\"><b>"+L[n]+"</b><br>"+G[n]+"</div>"});
+ }
+ $("rv").innerHTML=v+"<p></p>";
+}
+mol();
+$("start").onclick=start;$("again").onclick=start;
+$("next").onclick=function(){cur++;if(cur>=Q.length)fin();else ask()};
+document.addEventListener("keydown",function(e){
+ var i=LET.indexOf(e.key.toUpperCase());
+ if(i>=0&&!locked&&!$("game").classList.contains("hid"))pick(i);
+});
+</script>
+</body>
+</html>
